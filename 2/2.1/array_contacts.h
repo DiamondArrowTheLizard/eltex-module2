@@ -18,4 +18,7 @@ void array_contacts_destroy(array_contacts* array);
 int array_contacts_append(array_contacts* array, personal_info* contact);
 int array_contacts_remove(array_contacts* array, size_t index);
 
+void array_contacts_print_all(array_contacts* array);
+int array_contacts_print_at_index(array_contacts* array, size_t index);
+
 #endif // !ARRAY_CONTACTS_H

@@ -1,4 +1,5 @@
 #include "array_contacts.h"
+#include "personal_info.h"
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -17,10 +18,11 @@ array_contacts* array_contacts_init()
 
 void array_contacts_destroy(array_contacts* array)
 {
+    if(array == NULL) return;
+
     for(size_t i = 0; i < array->count; i++)
     {
-        free(array->contacts[i]);
-        array->contacts[i] = NULL;
+        personal_info_destroy(array->contacts[i]);
     }
     free(array->contacts);
     array->contacts = NULL;
@@ -31,7 +33,6 @@ void array_contacts_destroy(array_contacts* array)
     free(array);
     array = NULL;
 }
-
 int array_contacts_append(array_contacts* array, personal_info* contact)
 {
     if(array == NULL) return 0;
@@ -60,6 +61,22 @@ int array_contacts_remove(array_contacts* array, size_t index)
 
     array_contacts_destroy(array);
     array = new_array;
+
+    return 1;
+}
+
+void array_contacts_print_all(array_contacts* array)
+{
+    for(size_t i = 0; i < array->count; i++)
+    {
+        personal_info_print_all(array->contacts[i]);
+    }
+}
+
+int array_contacts_print_at_index(array_contacts* array, size_t index)
+{
+    if(index >= array->count) return 0;
+    personal_info_print_all(array->contacts[index]);
 
     return 1;
 }
