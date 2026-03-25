@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define STRING_ARRAY_INIT_CAPACITY 10
 
@@ -44,7 +45,7 @@ int string_array_append(string_array* array, char* string)
         else array->capacity *= 2;
 
         array->strings = realloc(array->strings, array->capacity * sizeof(*array->strings));
-        array->strings[array->count++] = string;
+        strncpy(array->strings[array->count++], string, strlen(string));
     }
     return 1;
 }
