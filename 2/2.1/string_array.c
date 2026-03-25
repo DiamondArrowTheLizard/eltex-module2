@@ -28,9 +28,6 @@ void string_array_destroy(string_array* array)
     free(array->strings);
     array->strings = NULL;
 
-    array->count = 0;
-    array->capacity = 0;
-
     free(array);
     array = NULL;
 }
@@ -41,29 +38,30 @@ int string_array_append(string_array* array, char* string)
 
     if(array->count >= array->capacity)
     {
-        if(array->capacity == 0) array->capacity = STRING_ARRAY_INIT_CAPACITY;
-        else array->capacity *= 2;
-
-        array->strings = realloc(array->strings, array->capacity * sizeof(*array->strings));
-        strncpy(array->strings[array->count++], string, strlen(string));
+        size_t new_capacity = array->capacity == 0 ? STRING_ARRAY_INIT_CAPACITY : array->capacity * 2;
+        char** new_strings = realloc(array->strings, new_capacity * sizeof(*array->strings));
+        if(new_strings == NULL) return 0;
+        array->strings = new_strings;
+        array->capacity = new_capacity;
     }
+
+    char* new_str = malloc(strlen(string) + 1);
+    if(new_str == NULL) return 0;
+    strcpy(new_str, string);
+    array->strings[array->count++] = new_str;
     return 1;
 }
 
 int string_array_remove(string_array* array, size_t index)
 {
-    if(array == NULL) return 0;
+    if(array == NULL || index >= array->count) return 0;
 
-    string_array* new_array = string_array_init();
-    for (size_t i = 0; i < array->count; i++)
+    free(array->strings[index]);
+    for(size_t i = index; i < array->count - 1; i++)
     {
-        if(i == index) continue;
-        else string_array_append(new_array, array->strings[i]);
+        array->strings[i] = array->strings[i+1];
     }
-
-    string_array_destroy(array);
-    array = new_array;
-
+    array->count--;
     return 1;
 }
 

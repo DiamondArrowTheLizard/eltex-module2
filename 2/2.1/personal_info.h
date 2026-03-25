@@ -19,10 +19,7 @@ typedef struct personal_info
 } personal_info;
 
 personal_info* personal_info_create(char* name, char* surname);
-void personal_info_clear_field(char* field);
 void personal_info_destroy(personal_info* info);
-
-void personal_info_update_field(char* old_field, char* new_field);
 
 void personal_info_new_name(personal_info* info, char* name);
 void personal_info_new_surname(personal_info* info, char* surname);

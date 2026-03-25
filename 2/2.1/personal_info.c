@@ -10,10 +10,10 @@ personal_info* personal_info_create(char* name, char* surname)
     personal_info* info = (personal_info*)malloc(sizeof(*info));
 
     info->name = (char*)malloc(strlen(name) + 1);
-    if(info->name) strncpy(info->name, name, strlen(name));
+    if(info->name) strcpy(info->name, name);
 
     info->surname = (char*)malloc(strlen(surname) + 1);
-    if(info->surname) strncpy(info->surname, surname, strlen(surname));
+    if(info->surname) strcpy(info->surname, surname);
 
     info->patronymic = NULL;
     info->workplace = NULL;
@@ -24,66 +24,65 @@ personal_info* personal_info_create(char* name, char* surname)
     return info;
 }
 
-void personal_info_clear_field(char* field)
-{
-    if(field == NULL) return;
-    free(field);
-    field = NULL;
-}
-
 void personal_info_destroy(personal_info* info)
 {
     if(info == NULL) return;
 
-    personal_info_clear_field(info->name);
-    personal_info_clear_field(info->surname);
-    personal_info_clear_field(info->patronymic);
+    free(info->name);
+    free(info->surname);
+    free(info->patronymic);
+    free(info->workplace);
+    free(info->position);
 
-    personal_info_clear_field(info->workplace);
-    personal_info_clear_field(info->position);
-    
     string_array_destroy(info->phone_numbers);
     string_array_destroy(info->links);
+
+    info->name = NULL;
+    info->surname = NULL;
+    info->patronymic = NULL;
+    info->workplace = NULL;
+    info->position = NULL;
+
+    info->phone_numbers = NULL;
+    info->links = NULL;
 
     free(info);
     info = NULL;
 }
 
-void personal_info_update_field(char* old_field, char* new_field)
-{
-    if(old_field != NULL)
-    {
-        free(old_field);
-        old_field = NULL;
-    }
-
-    old_field = (char*)malloc(strlen(new_field) + 1); 
-    if(old_field) strncpy(old_field, new_field, strlen(new_field));
-}
-
 void personal_info_new_name(personal_info* info, char* name)
 {
-    personal_info_update_field(info->name, name);
+    if(info->name) free(info->name);
+    info->name = (char*)malloc(strlen(name) + 1);
+    if(info->name) strcpy(info->name, name);
 }
 
 void personal_info_new_surname(personal_info* info, char* surname)
 {
-    personal_info_update_field(info->surname, surname);
+    if(info->surname) free(info->surname);
+    info->surname = (char*)malloc(strlen(surname) + 1);
+    if(info->surname) strcpy(info->surname, surname);
 }
 
 void personal_info_new_patronymic(personal_info* info, char* patronymic)
 {
-    personal_info_update_field(info->patronymic, patronymic);
+    if(info->patronymic) free(info->patronymic);
+    info->patronymic = (char*)malloc(strlen(patronymic) + 1);
+    if(info->patronymic) strcpy(info->patronymic, patronymic);
 }
 
 void personal_info_new_workplace(personal_info* info, char* workplace)
 {
-    personal_info_update_field(info->workplace, workplace);
+    if(info->workplace) free(info->workplace);
+    info->workplace = (char*)malloc(strlen(workplace) + 1);
+    if(info->workplace) strcpy(info->workplace, workplace);
 }
 
 void personal_info_new_position(personal_info* info, char* position)
 {
-    personal_info_update_field(info->position, position);
+    if(info->position) free(info->position);
+    info->position = (char*)malloc(strlen(position) + 1);
+    if(info->position) strcpy(info->position, position);
 }
 
 void personal_info_new_phone_numbers(personal_info* info, string_array* phone_numbers)
