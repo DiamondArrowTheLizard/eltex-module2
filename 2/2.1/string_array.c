@@ -9,7 +9,7 @@
 string_array* string_array_init()
 {
     string_array* array = (string_array*)malloc(sizeof(*array));
-    array->strings = NULL;
+    array->strings = malloc(STRING_ARRAY_INIT_CAPACITY * sizeof(*array->strings));
     array->count = 0;
     array->capacity = STRING_ARRAY_INIT_CAPACITY;
 
@@ -38,11 +38,10 @@ int string_array_append(string_array* array, char* string)
 
     if(array->count >= array->capacity)
     {
-        size_t new_capacity = array->capacity == 0 ? STRING_ARRAY_INIT_CAPACITY : array->capacity * 2;
-        char** new_strings = realloc(array->strings, new_capacity * sizeof(*array->strings));
-        if(new_strings == NULL) return 0;
-        array->strings = new_strings;
-        array->capacity = new_capacity;
+        if (array->capacity == 0) array->capacity = STRING_ARRAY_INIT_CAPACITY;
+        else array->capacity *= 2;
+
+        array->strings = realloc(array->strings, array->capacity * sizeof(*array->strings));
     }
 
     char* new_str = malloc(strlen(string) + 1);

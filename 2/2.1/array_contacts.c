@@ -2,13 +2,14 @@
 #include "personal_info.h"
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define ARRAY_CONTACTS_INIT_CAPACITY 10
 
 array_contacts* array_contacts_init()
 {
     array_contacts* array = (array_contacts*)malloc(sizeof(*array));
-    array->contacts = NULL;
+    array->contacts = malloc(ARRAY_CONTACTS_INIT_CAPACITY * sizeof(*array->contacts));
     array->count = 0;
     array->capacity = ARRAY_CONTACTS_INIT_CAPACITY;
     return array;
@@ -34,11 +35,10 @@ int array_contacts_append(array_contacts* array, personal_info* contact)
 
     if(array->count >= array->capacity)
     {
-        size_t new_capacity = array->capacity == 0 ? ARRAY_CONTACTS_INIT_CAPACITY : array->capacity * 2;
-        personal_info** new_contacts = realloc(array->contacts, new_capacity * sizeof(*array->contacts));
-        if(new_contacts == NULL) return 0;
-        array->contacts = new_contacts;
-        array->capacity = new_capacity;
+        if (array->capacity == 0) array->capacity = ARRAY_CONTACTS_INIT_CAPACITY;
+        else array->capacity *= 2;
+
+        array->contacts = realloc(array->contacts, array->capacity * sizeof(*array->contacts));
     }
 
     array->contacts[array->count++] = contact;
@@ -65,6 +65,7 @@ void array_contacts_print_all(array_contacts* array)
     for(size_t i = 0; i < array->count; i++)
     {
         personal_info_print_all(array->contacts[i]);
+        printf("\n");
     }
 }
 
