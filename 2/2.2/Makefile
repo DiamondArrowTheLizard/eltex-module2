@@ -6,7 +6,7 @@ SRC_DIR = .
 
 SRC_FILES = $(SRC_DIR)/main.c 
 
-TARGET = ../../bin/calculator
+TARGET = ../../bin/calculator1
 
 all: 
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC_FILES) 
