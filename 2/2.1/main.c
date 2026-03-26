@@ -1,7 +1,7 @@
 #include "personal_info.h"
 #include "array_contacts.h"
 #include "string_array.h"
-#include <stdio.h>
+#include "ui.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -12,14 +12,9 @@ int main()
     string_array* phones = string_array_init();
     string_array* links = string_array_init();
 
-
-    personal_info_print_all(info);
-
     char* new_name = "Vlad";
     char* new_patronymic = (char*)malloc((strlen("Ivanovich") + 1) * sizeof(*new_patronymic));
     strcpy(new_patronymic, "Ivanovich");
-
-    printf("\n[%s]\n\n", new_patronymic);
 
     personal_info_new_name(info, new_name);
     personal_info_new_patronymic(info, new_patronymic);
@@ -39,14 +34,7 @@ int main()
     personal_info* info3 = personal_info_create("Gena", "Afonovich");
     array_contacts_append(array, info3);
 
-
-
-    array_contacts_print_all(array);
-
-    array_contacts_remove(array, 2);
-
-
-    array_contacts_print_all(array);
+    ui_run(array);
 
     free(new_patronymic);
     array_contacts_destroy(array);

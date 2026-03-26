@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRC_DIR = .
 
-SRC_FILES = $(SRC_DIR)/main.c $(SRC_DIR)/personal_info.c $(SRC_DIR)/array_contacts.c $(SRC_DIR)/string_array.c
+SRC_FILES = $(SRC_DIR)/main.c $(SRC_DIR)/personal_info.c $(SRC_DIR)/array_contacts.c $(SRC_DIR)/string_array.c $(SRC_DIR)/ui.c
 
 TARGET = ../../bin/contact_book
 
