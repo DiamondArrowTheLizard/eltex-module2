@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define USER_INPUT_NUMBER_BUFFER 7
+#define USER_INPUT_OPERATION_BUFFER 10
+
+double addition(double num1, double num2)
+{
+    return num1 + num2;
+}
+
+double subtraction(double num1, double num2)
+{
+    return num1 - num2;
+}
+
+double multiplication(double num1, double num2)
+{
+    return num1 * num2;
+}
+
+double division(double num1, double num2)
+{
+    return num1 / num2;
+}
+
+int main()
+{
+    printf("Calculator\n");
+
+    for(;;)
+    {
+        char input_number1[USER_INPUT_NUMBER_BUFFER];
+        char input_number2[USER_INPUT_NUMBER_BUFFER];
+        char input_operation[USER_INPUT_OPERATION_BUFFER];
+
+        double num1;
+        double num2;
+        char operation;
+        
+        printf("Operations: +, -, *, /\n");
+        printf("Input 'e' to exit.\n");
+
+        printf("Operation: ");
+        fgets(input_operation, sizeof(input_operation), stdin);
+        operation = input_operation[0];
+        if(operation == 'e') return 0;
+
+        printf("First number: ");
+        fgets(input_number1, sizeof(input_number1), stdin);
+        num1 = atof(input_number1);
+
+        printf("Second number: ");
+        fgets(input_number2, sizeof(input_number2), stdin);
+        num2 = atof(input_number2);
+
+        printf("%lf %c %lf = ", num1, operation, num2);
+
+        switch(operation)
+        {
+            case '+':
+                printf("%lf\n", addition(num1, num2));
+                break;
+            case '-':
+                printf("%lf\n", subtraction(num1, num2));
+                break;
+            case '*':
+                printf("%lf\n", multiplication(num1, num2));
+                break;
+            case '/':
+                printf("%lf\n", division(num1, num2));
+                break;
+            default:
+                printf("Error: unknown operation\n");
+        }
+
+        printf("\n");
+    }
+}
