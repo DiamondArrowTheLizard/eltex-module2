@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define ARRAY_CONTACTS_INIT_CAPACITY 10
-
 array_contacts* array_contacts_init()
 {
     array_contacts* array = (array_contacts*)malloc(sizeof(*array));
@@ -31,7 +29,7 @@ void array_contacts_destroy(array_contacts* array)
 
 int array_contacts_append(array_contacts* array, personal_info* contact)
 {
-    if(array == NULL) return 0;
+    if(array == NULL) return ARRAY_CONTACTS_ERROR;
 
     if(array->count >= array->capacity)
     {
@@ -42,12 +40,12 @@ int array_contacts_append(array_contacts* array, personal_info* contact)
     }
 
     array->contacts[array->count++] = contact;
-    return 1;
+    return ARRAY_CONTACTS_OK;
 }
 
 int array_contacts_remove(array_contacts* array, size_t index)
 {
-    if(array == NULL || index >= array->count) return 0;
+    if(array == NULL || index >= array->count) return ARRAY_CONTACTS_ERROR;
 
     personal_info_destroy(array->contacts[index]);
     array->contacts[index] = NULL;
@@ -57,7 +55,7 @@ int array_contacts_remove(array_contacts* array, size_t index)
         array->contacts[i] = array->contacts[i+1];
     }
     array->count--;
-    return 1;
+    return ARRAY_CONTACTS_OK;
 }
 
 void array_contacts_print_all(array_contacts* array)
@@ -71,7 +69,7 @@ void array_contacts_print_all(array_contacts* array)
 
 int array_contacts_print_at_index(array_contacts* array, size_t index)
 {
-    if(index >= array->count) return 0;
+    if(index >= array->count) return ARRAY_CONTACTS_ERROR;
     personal_info_print_all(array->contacts[index]);
-    return 1;
+    return ARRAY_CONTACTS_OK;
 }

@@ -4,6 +4,11 @@
 #include "personal_info.h"
 #include <stddef.h>
 
+#define ARRAY_CONTACTS_OK 1
+#define ARRAY_CONTACTS_ERROR 0
+
+#define ARRAY_CONTACTS_INIT_CAPACITY 10
+
 typedef struct array_contacts
 {
     personal_info** contacts;
