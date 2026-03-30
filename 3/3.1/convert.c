@@ -63,3 +63,59 @@ int convert_letter_mask_bin(char* mask)
     }
     return CONVERT_OK;
 }
+
+/* [-1]: - l
+ * [0, 3, 6]: - r
+ * [1, 4, 7]: - w
+ * [2, 5, 8]: - x
+*/
+static void convert_bin_letter_at(char* mask, size_t index)
+{
+    switch(index)
+    {
+        case 0:
+        case 3:
+        case 6:
+            mask[index] = 'r';
+            break;
+
+        case 1:
+        case 4:
+        case 7:
+            mask[index] = 'w';
+            break;
+
+        case 2:
+        case 5:
+        case 8:
+            mask[index] = 'x';
+            break;
+    }
+}
+
+int convert_bin_letter_mask(char* mask)
+{
+    for(size_t i = 0; i < strlen(mask); i++) 
+    {
+        switch(mask[i])
+        {
+            case '-':
+            case 'l':
+            case 'd':
+            case 'b':
+                break;
+
+            case '0':
+                mask[i] = '-';
+                break;
+
+            case '1':
+                convert_bin_letter_at(mask, i);
+            break;
+            
+            default:
+                return CONVERT_BAD;
+        }
+    }
+    return CONVERT_OK;
+}

@@ -1,11 +1,9 @@
-
 #include <stddef.h>
 #include <stdio.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include "print.h"
 
-#define PERMISSION_MASK (S_IRWXU | S_IRWXG | S_IRWXO)
 
 int main(int argc, char** argv) 
 {
@@ -25,6 +23,12 @@ int main(int argc, char** argv)
 
         case 'f':
             printf("File permissions:\n");
+            struct stat file_stat;
+            if (stat(argv[2], &file_stat) == -1) {
+                perror("stat");
+                return 1;
+            }
+            print_stat_masks(file_stat);
             break;
 
         case 'c':
@@ -39,13 +43,3 @@ int main(int argc, char** argv)
     return 0;
 }
 
-/*
-    struct stat file_stat;
-    if (stat("test.txt", &file_stat) == -1) {
-        perror("stat");
-        return 1;
-    }
-    printf("%b\n", file_stat.st_mode & PERMISSION_MASK);
-    printf("%o\n", file_stat.st_mode & PERMISSION_MASK);
-    return 0;
-*/

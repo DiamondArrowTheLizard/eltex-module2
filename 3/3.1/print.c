@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 void print_permissions(char* mask)
 {
@@ -54,3 +56,19 @@ void print_mask_bin(char* mask)
     }
 }
 
+void print_stat_masks(struct stat stat)
+{
+    char lettered_mask[MASK_LETTERS_LEN];
+    sprintf(lettered_mask, "%b", stat.st_mode & PERMISSION_MASK);
+    if(convert_bin_letter_mask(lettered_mask) == CONVERT_OK)
+    {
+        printf("    Octal: %o\n", stat.st_mode & PERMISSION_MASK);
+        printf("    Binary: %b\n", stat.st_mode & PERMISSION_MASK);
+        printf("    Lettered: %s\n", lettered_mask);
+    }
+    else 
+    {
+        printf("    Error: permissions format incorrect\n");
+    }
+
+}
