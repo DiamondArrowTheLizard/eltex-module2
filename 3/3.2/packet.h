@@ -31,7 +31,7 @@ int packet_append(packet* packet, struct in_addr* address);
 void packet_print_ip_at(packet* packet, size_t index, FILE* stream);
 void packet_print_all_ips(packet* packet, FILE* stream);
 
-int packet_check_ip_in_network(in_addr_t ip, in_addr_t ip_gateway, in_addr_t mask);
+int packet_check_ip_in_network(in_addr_t ip, in_addr_t ip_network, in_addr_t mask);
 
 
 #endif // !PACKET_H

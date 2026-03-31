@@ -78,9 +78,9 @@ void packet_print_all_ips(packet* packet, FILE* stream)
     }
 }
 
-int packet_check_ip_in_network(in_addr_t ip, in_addr_t ip_gateway, in_addr_t mask)
+int packet_check_ip_in_network(in_addr_t ip, in_addr_t ip_network, in_addr_t mask)
 {
-    if( (ip & mask) == (ip_gateway & mask) )
+    if( (ip & mask) == (ip_network & mask) )
     {
         return PACKET_IP_IN_NETWORK;
     }
