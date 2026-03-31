@@ -1,14 +1,20 @@
-#include <stdio.h>
-#include "ip.h"
+#include "packet.h"
+#include <stdint.h>
+#include <string.h>
 
 int main()
 {
-    struct ip* addr = ip_create(255, 255, 0, 0);
+    
+    packet* packet = packet_init();
 
-    int cidr = ip_cidr(addr);
+    struct in_addr address; 
+    uint32_t ip = 3232235876;
+    address.s_addr = ip;
 
-    ip_print(addr, stdout);
-    printf("/%d\n", cidr);
-
-    ip_destroy(addr);
+    packet_append(packet, &address);
+    packet_print_all_ips(packet, stdout);
+    
+    
+    packet_destroy(packet);
+    return 0;
 }

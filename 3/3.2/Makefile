@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 SRC_DIR = .
 
-SRC_FILES = $(SRC_DIR)/main.c  $(SRC_DIR)/ip.c
+SRC_FILES = $(SRC_DIR)/main.c  $(SRC_DIR)/packet.c
 
 TARGET = ../../bin/packet_sender
 
