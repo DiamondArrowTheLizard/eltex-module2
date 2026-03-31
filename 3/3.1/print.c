@@ -72,3 +72,17 @@ void print_stat_masks(struct stat stat)
     }
 
 }
+
+void print_stat_masks_modified(struct stat stat, char *chmod)
+{
+    int permission_mask = stat.st_mode & PERMISSION_MASK;
+    char mask[MASK_LETTERS_LEN];
+    if(convert_chmod_bin_mask(chmod, permission_mask, mask) == CONVERT_OK)
+    {
+        int octal = strtol(mask, NULL, 2);
+        printf("    Octal: %o\n", octal);
+        printf("    Binary: %s\n", mask);
+        convert_bin_letter_mask(mask);
+        printf("    Lettered: %s\n", mask);
+    }
+}

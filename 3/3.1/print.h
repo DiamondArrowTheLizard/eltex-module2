@@ -9,5 +9,6 @@
 void print_permissions(char* mask);
 void print_mask_bin(char* mask);
 void print_stat_masks(struct stat stat);
+void print_stat_masks_modified(struct stat stat, char* chmod);
 
 #endif // !PRINT_H
