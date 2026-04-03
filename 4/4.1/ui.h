@@ -18,13 +18,13 @@
 #define UI_SIGNAL_PRINT_ALL 5
 #define UI_SIGNAL_QUIT 6
 
-
-void ui_run(contacts_list* list);
+void ui_run(contacts_list** list);
 
 int ui_process_user_action(int user_choice);
-void ui_add(contacts_list* list);
+void ui_add(contacts_list** list);
 void ui_redact(contacts_list* list);
-void ui_delete(contacts_list* list);
+void ui_delete(contacts_list** list);
 void ui_print_entry(contacts_list* list);
 void ui_print_all(contacts_list* list);
-#endif // !UI_H
+
+#endif
